@@ -1,0 +1,29 @@
+# data - too large for git, download from kaggle
+*.csv
+
+# output plots and results
+*.png
+script/experiment_results*.csv
+
+# python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# virtual envs
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
