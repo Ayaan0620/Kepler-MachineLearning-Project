@@ -21,8 +21,8 @@ results/        - experiment output csv and figures
 
 ## Team Members
 
-[ADD NAMES]
+Ayaan Farooq
+Bo Van Laetham
+Timothy Moskal
 
-## Course
 
-[ADD COURSE INFO]
