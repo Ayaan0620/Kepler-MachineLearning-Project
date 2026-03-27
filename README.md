@@ -22,7 +22,22 @@ results/        - experiment output csv and figures
 ## Team Members
 
 Ayaan Farooq
+
 Bo Van Laetham
+
 Timothy Moskal
+
+<img width="2100" height="900" alt="image" src="https://github.com/user-attachments/assets/70a6e6b5-2f24-4102-a179-8e4bffd64dab" />
+
+<img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/80f1b82e-0639-4e4a-92f2-75e1c145927c" />
+
+<img width="2578" height="1560" alt="image" src="https://github.com/user-attachments/assets/431c4875-bfcc-4f5e-a637-07ebbbff30d7" />
+
+<img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/7b720838-f102-4972-a81a-777b42e8ddeb" />
+
+<img width="3433" height="2066" alt="image" src="https://github.com/user-attachments/assets/3504a22c-b0e9-4dcf-90a3-f7add8b5daf2" />
+
+
+
 
 
