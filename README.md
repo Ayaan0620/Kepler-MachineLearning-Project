@@ -53,12 +53,37 @@ Gap is under 0.002 — well within noise. Error bars carry nearly as much classi
 </p>
 
 <p align="center">
-  <img src="results/figures/shap_beeswarm.png" width="700" alt="SHAP beeswarm plot"/>
-  <br><em>SHAP feature importances — transit depth, duration, and radius ratio dominate</em>
+  <img src="results/figures/ablation_barplot.png" width="700" alt="Ablation bar plot"/>
 </p>
 
 <p align="center">
-  <img src="results/figures/ablation_barplot.png" width="700" alt="Ablation bar plot"/>
+  <img src="visualizations/images/shap_astrophysical.png" width="700" alt="SHAP astrophysical features"/>
+  <br><em>SHAP values for astrophysical features — transit depth and planetary radius dominate classification</em>
+</p>
+
+<p align="center">
+  <img src="results/figures/shap_beeswarm.png" width="700" alt="SHAP beeswarm plot"/>
+  <br><em>Full SHAP beeswarm — feature impact distribution across all samples</em>
+</p>
+
+<p align="center">
+  <img src="visualizations/images/uncertainty_deep_dive.png" width="700" alt="Uncertainty deep dive"/>
+  <br><em>Deep dive into uncertainty signal — how error bar magnitude separates confirmed planets from false positives</em>
+</p>
+
+<p align="center">
+  <img src="visualizations/images/decision_boundary_evolution.png" width="700" alt="Decision boundary evolution"/>
+  <br><em>Decision boundary evolution during logistic regression training</em>
+</p>
+
+<p align="center">
+  <img src="visualizations/images/calibration_curves.png" width="700" alt="Calibration curves"/>
+  <br><em>Probability calibration — how well each model's confidence matches actual outcomes</em>
+</p>
+
+<p align="center">
+  <img src="visualizations/images/weight_trajectory_heatmap.png" width="700" alt="Weight trajectory heatmap"/>
+  <br><em>Logistic regression weight trajectory across gradient descent iterations</em>
 </p>
 
 ---
