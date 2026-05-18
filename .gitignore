@@ -3,6 +3,7 @@
 
 # output plots and results
 *.png
+!results/figures/*.png
 script/experiment_results*.csv
 
 # python cache
