@@ -1,6 +1,92 @@
-# Exoplanet Classification using Kepler Data
+# Kepler Exoplanet Classification
 
-Machine learning project that classifies Kepler Objects of Interest (KOIs) as confirmed exoplanets or false positives. We compare four models (logistic regression from scratch, sklearn LR, random forest, XGBoost) across different feature sets, including an experiment testing whether measurement uncertainty (error bars) alone can classify planets nearly as well as the raw measurements.
+> Can measurement uncertainty alone classify exoplanets? We tested it.
+
+Machine learning project classifying Kepler Objects of Interest (KOIs) as confirmed exoplanets or false positives using the [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/). We compare four models across five feature sets — including an ablation experiment showing that **error bars alone achieve within 0.002 AUC of raw measurements**.
+
+![Python](https://img.shields.io/badge/python-3.x-blue) ![Dataset](https://img.shields.io/badge/dataset-NASA%20Kepler-brightgreen) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+---
+
+## Key Findings
+
+- **XGBoost (All Features) achieves 95.1% accuracy and AUC 0.9864** under 10-fold stratified cross-validation
+- **Uncertainty-only features match raw measurements almost exactly** — XGBoost AUC drops just 0.0019 when error bars replace actual measurements, suggesting measurement precision encodes astrophysical signal independently
+- **Tree models are robust to feature set choice** — Random Forest and XGBoost AUC stays above 0.976 across all five feature sets; linear models degrade significantly without engineered features
+- SHAP analysis identifies transit depth, duration, and planetary radius ratio as the most influential features
+
+---
+
+## Results
+
+### AUC-ROC by Model and Feature Set (10-fold stratified CV)
+
+| Feature Set | LR Scratch | LR Sklearn | Random Forest | XGBoost |
+|---|---|---|---|---|
+| Raw Only | 0.8521 | 0.9067 | 0.9766 | 0.9818 |
+| Uncertainty Only | 0.8401 | 0.9071 | 0.9783 | **0.9799** |
+| Raw + Uncertainty | 0.9111 | 0.9666 | 0.9827 | 0.9864 |
+| Relative Uncertainty | 0.8444 | 0.9127 | 0.9807 | 0.9836 |
+| All Features | 0.9189 | 0.9703 | 0.9839 | **0.9870** |
+
+### Uncertainty Ablation (XGBoost AUC)
+
+| Feature Set | XGBoost AUC | Δ vs Raw Only |
+|---|---|---|
+| Raw Only | 0.9818 | — |
+| Uncertainty Only | 0.9799 | −0.0019 |
+| Raw + Uncertainty | 0.9864 | +0.0046 |
+
+Gap is under 0.002 — well within noise. Error bars carry nearly as much classification signal as the measurements themselves.
+
+---
+
+## Visualizations
+
+<p align="center">
+  <img src="results/figures/uncertainty_investigation.png" width="700" alt="Uncertainty ablation results"/>
+  <br><em>XGBoost AUC across feature sets — uncertainty-only nearly matches raw measurements</em>
+</p>
+
+<p align="center">
+  <img src="results/figures/roc_curves.png" width="700" alt="ROC curves"/>
+</p>
+
+<p align="center">
+  <img src="results/figures/shap_beeswarm.png" width="700" alt="SHAP beeswarm plot"/>
+  <br><em>SHAP feature importances — transit depth, duration, and radius ratio dominate</em>
+</p>
+
+<p align="center">
+  <img src="results/figures/ablation_barplot.png" width="700" alt="Ablation bar plot"/>
+</p>
+
+---
+
+## Models
+
+| Model | Implementation |
+|---|---|
+| Logistic Regression (Scratch) | Custom gradient descent, lr=0.01, 1000 iterations |
+| Logistic Regression (Sklearn) | `LogisticRegression(max_iter=1000)` |
+| Random Forest | `n_estimators=100` |
+| XGBoost | `n_estimators=100`, `eval_metric='logloss'` |
+
+---
+
+## Feature Sets
+
+| Name | Contents |
+|---|---|
+| Raw Only | Base measurement columns |
+| Uncertainty Only | `err1`/`err2` columns only |
+| Raw + Uncertainty | Base + error columns |
+| Relative Uncertainty | Error/measurement ratios (e.g. `koi_period_err1 / koi_period`) |
+| All Features | Base + uncertainty + 3 engineered ratios (`depth_duration_ratio`, `prad_srad_ratio`, `snr_depth_ratio`) |
+
+All preprocessing (imputation, scaling) is fit on training folds only — no leakage.
+
+---
 
 ## How to Run
 
@@ -9,35 +95,30 @@ pip install -r requirements.txt
 python src/run_experiments.py
 ```
 
-The cleaning script (`src/cleaner.py`) processes the raw NASA data into `data/kepler_clean_v2.csv`. The main experiment script (`src/run_experiments.py`) runs 10-fold cross-validation across all models and feature sets.
+`src/cleaner.py` processes `data/cumulative.csv` (raw NASA KOI table) into `data/kepler_clean_v2.csv`. `src/run_experiments.py` runs all 20 experiments (5 feature sets × 4 models) and writes results to `results/experiment_results_v3.csv`.
+
+---
 
 ## Project Structure
 
 ```
-data/           - raw and cleaned datasets
-src/            - all python scripts
-results/        - experiment output csv and figures
+├── data/                   # raw and cleaned datasets
+├── src/                    # experiment runner, cleaner, models
+├── results/                # CSV results + figures
+│   └── figures/
+└── visualizations/         # additional plots and generation scripts
 ```
 
-## Team Members
+---
 
-Ayaan Farooq
+## Team
 
-Bo Van Laetham
+- [Ayaan Farooq](https://github.com/Ayaan0620)
+- Bo Van Laetham
+- Timothy Moskal
 
-Timothy Moskal
+---
 
-<img width="2100" height="900" alt="image" src="https://github.com/user-attachments/assets/70a6e6b5-2f24-4102-a179-8e4bffd64dab" />
+## Dataset
 
-<img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/80f1b82e-0639-4e4a-92f2-75e1c145927c" />
-
-<img width="2578" height="1560" alt="image" src="https://github.com/user-attachments/assets/431c4875-bfcc-4f5e-a637-07ebbbff30d7" />
-
-<img width="2700" height="2100" alt="image" src="https://github.com/user-attachments/assets/7b720838-f102-4972-a81a-777b42e8ddeb" />
-
-<img width="3433" height="2066" alt="image" src="https://github.com/user-attachments/assets/3504a22c-b0e9-4dcf-90a3-f7add8b5daf2" />
-
-
-
-
-
+NASA Exoplanet Archive — [Cumulative KOI Table](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative)
